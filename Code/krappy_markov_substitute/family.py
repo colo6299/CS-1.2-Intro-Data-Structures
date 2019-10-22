@@ -1,5 +1,7 @@
 import random
 from hiptr import Triptor
+import string
+from bessemer import aesop
 
 class Mother:
     '''
@@ -10,21 +12,7 @@ class Mother:
         pass
     
     def open_storybook(self):
-        f = open('aesop.txt', 'r')
-        words_list = f.readlines()
-        f.close()
-        # print(words_list)
-        # words_list = words_list[0].split('\n')
-        s_prune = []
-        # print(words_list)
-        for i in range(len(words_list)):
-            if len(words_list[i]) < 80:
-                s_prune.append(i) 
-
-        s_prune.reverse()
-        for i in s_prune:
-            words_list.pop(i)
-        print(words_list)
+        aesop()
 
     def bedtime_story(self, daughter):
         open_storybook()
@@ -61,6 +49,4 @@ class Daughter:
 if __name__ == "__main__":
     mom = Mother()
     mom.open_storybook()
-        
-
-
+    
