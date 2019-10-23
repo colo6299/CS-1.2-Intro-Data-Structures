@@ -1,0 +1,1 @@
+# go run ./krappy_markov_substitute/family.py for a *wonderful* random word generator

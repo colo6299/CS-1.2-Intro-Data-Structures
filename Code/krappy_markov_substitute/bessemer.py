@@ -1,11 +1,11 @@
 import string
 
 
-def clean(filename):
+def clean(filename = 'aesop.txt'):
     text = aesop()
-    for sentence in text:
-        sentence = sentence.strip()
-        sentence = sentence.split(' ')
+    for i in range(len(text)):
+        text[i] = text[i].strip().split(' ')
+    return text
     
 
 def aesop():
@@ -13,6 +13,8 @@ def aesop():
     words_list = f.readlines()
     f.close()
     # print(words_list)
+    for i in range(len(words_list)):
+        words_list[i] = words_list[i].lower()
     s_prune = []
     for i in range(len(words_list)):
         if len(words_list[i]) < 80:
@@ -44,8 +46,5 @@ def aesop():
 
     return sentences
 
-
-
-
 if __name__ == "__main__":
-    aesop()
+    print(clean())
