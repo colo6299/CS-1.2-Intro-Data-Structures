@@ -1,8 +1,19 @@
 class Diptor:
-    '''
-    
-    '''
-    pass
+
+    def __init__(self, name = 'None'):
+        self.name = name
+        self.list = []
+        self.dict = {}
+
+    def add(self, item):
+        '''
+        Adds item to diptor
+
+        Item must have hashable name property!
+        '''
+        self.list.append(item)
+        self.dict[item.name] = len(self.list) - 1
+
 
 
 class Triptor:

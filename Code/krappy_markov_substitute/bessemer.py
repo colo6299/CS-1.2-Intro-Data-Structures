@@ -2,11 +2,11 @@ import string
 
 
 def clean(filename):
-    f = open(filename, 'r')
-    text = f.readlines()
-    f.close()
-
-    punc = '!"#$%&\'()*+, -./:;<=>?@[\]^_`{|}~'
+    text = aesop()
+    for sentence in text:
+        sentence = sentence.strip()
+        sentence = sentence.split(' ')
+    
 
 def aesop():
     f = open('aesop.txt', 'r')
@@ -42,7 +42,7 @@ def aesop():
         sentences.pop(i)    
     # print(words_list)
 
-    print(sentences)
+    return sentences
 
 
 
