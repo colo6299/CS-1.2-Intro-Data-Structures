@@ -88,13 +88,13 @@ class Daughter:
                         
     def sleep_talk(self, babble):
         if babble == '#START':
-            print()
+            print(end=' ')
         else:
             print(babble, end=' ')
 
     def wake_up(self):
         self.asleep = False
-        print('\n')
+        
     
 if __name__ == "__main__":
     mother = Mother()
@@ -104,5 +104,20 @@ if __name__ == "__main__":
     
     # print(daughter.memories.list[3].name)
     # print(mother.storybook)
-    daughter.go_to_sleep()
+
+    print()
+    print('TEXT PROCESSING COMPLETE')
+    loop = True
+    while loop:
+        count = input('enter a number of lines, or anyhting else to quit: ')
+        if count.isnumeric():
+            for i in range(int(count)):
+                print()
+                print([i], end=' ')
+                daughter.go_to_sleep()
+            print()
+            print()
+        else:
+            loop = False
+
     

@@ -17,7 +17,7 @@ def aesop():
         words_list[i] = words_list[i].lower()
     s_prune = []
     for i in range(len(words_list)):
-        if len(words_list[i]) < 80:
+        if len(words_list[i]) < 10:
             s_prune.append(i)
 
     s_prune.reverse()
