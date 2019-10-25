@@ -1,5 +1,5 @@
 import random
-from hiptr import Triptor, Diptor
+from hiptr import Triptor, Diptor, Hishtor
 import string
 from bessemer import aesop, clean
 import cProfile
@@ -9,14 +9,14 @@ import re
 
 # TDL: get rid of .sample, fix up sweeper to not be twice as slow for no reason
 
-class Mother:
+class Parent:
     '''
     The doting mother of the family :)
     '''
 
     def __init__(self):
         self.storybook = None
-        self.daughter = None
+        self.child = None
     
     def open_storybook(self):
         self.storybook = [clean()]
@@ -24,20 +24,20 @@ class Mother:
     def add_chapter(self, chapter):
         self.storybook.append(chapter)
 
-    def bedtime_story(self, daughter):
+    def bedtime_story(self, child):
         for chapter in self.storybook:
-            daughter.listen(chapter)
+            child.listen(chapter)
 
         
-class Daughter:
+class Child:
     '''
     What will she dream of?
     '''
 
     def __init__(self):
         self.memories = Diptor('Memories') # words_list[ ] diptor??
-        self.memories.add(Triptor('#START'))
-        self.memories.add(Triptor('#END'))
+        self.memories.add(Hishtor('#START'))
+        self.memories.add(Hishtor('#END'))
         self.asleep = False
 
     def listen(self, chapter):  # boutta double these reads lol
@@ -64,13 +64,13 @@ class Daughter:
         if word_1 in self.memories.dict:
             ndx1 = self.memories.dict[word_1]  # Triptor index
         else:
-            self.memories.add(Triptor(word_1))
+            self.memories.add(Hishtor(word_1))
             ndx1 = len(self.memories.list) - 1
 
         if word_2 in self.memories.dict:
             ndx2 = self.memories.dict[word_2]  # Triptor index
         else:
-            self.memories.add(Triptor(word_2))
+            self.memories.add(Hishtor(word_2))
             ndx2 = len(self.memories.list) - 1
 
         self.memories.list[ndx1].add(ndx2)
@@ -81,12 +81,12 @@ class Daughter:
         self.dream()
 
     def dream(self): 
-        thought = self.memories.list[0]  # Triptor! (start at starterchar)
+        thought = self.memories.list[0]  # Hishtor! (start at starterchar) Panic!
         while self.asleep:                                                                             
             self.sleep_talk(thought.name)
-            wandering_memory = random.choices(thought.list, weights=thought.hist)
+            wandering_memory = thought.choice()
             # print(wandering_memory)
-            thought = self.memories.list[wandering_memory[0]] # why the zero? whatever, it works.
+            thought = self.memories.list[wandering_memory] # why the zero? whatever, it works.
             if thought == self.memories.list[1]:  # End at enderchar chosen
                 self.wake_up()
                         
@@ -100,8 +100,8 @@ class Daughter:
         self.asleep = False
 
 def bedtime():
-    mother = Mother()
-    daughter = Daughter()
+    mother = Parent()
+    daughter = Child()
     mother.open_storybook()
     mother.bedtime_story(daughter)
     print('num is', end=': ')
@@ -113,7 +113,7 @@ def bedtime():
     print('TEXT PROCESSING COMPLETE')
     loop = True
     while loop:
-        count = input('enter a number of lines, or anything else to quit: ')
+        count = '1000000' #input('enter a number of lines, or anything else to quit: ')
         if count.isnumeric():
             for i in range(int(count)):
                 print()
@@ -121,7 +121,7 @@ def bedtime():
                 daughter.go_to_sleep()
             print()
             print()
-            # loop = False #rem
+            loop = False #rem
         else:
             loop = False
 
