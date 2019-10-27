@@ -128,9 +128,9 @@ class Hishtor:
         don't expect it to model things well lmao
         '''
         if not self.fresh:
-            self.domain = math.log(len(self.list)) 
+            self.domain = math.log(len(self.list)) / 1
         
-        index = int(math.exp(self.domain * random.random()))
+        index = int(math.exp(self.domain * random.random() * 1))
         return self.list[index - 1]  # ...yeah I tacked on a (-1) and it started working
 
 

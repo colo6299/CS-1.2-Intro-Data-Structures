@@ -113,7 +113,7 @@ def bedtime():
     print('TEXT PROCESSING COMPLETE')
     loop = True
     while loop:
-        count = '1000000' #input('enter a number of lines, or anything else to quit: ')
+        count = input('enter a number of lines, or anything else to quit: ')
         if count.isnumeric():
             for i in range(int(count)):
                 print()
@@ -121,7 +121,7 @@ def bedtime():
                 daughter.go_to_sleep()
             print()
             print()
-            loop = False #rem
+            #loop = False #rem
         else:
             loop = False
 
