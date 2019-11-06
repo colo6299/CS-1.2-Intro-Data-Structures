@@ -4,6 +4,7 @@ import string
 from bessemer import aesop, clean
 import cProfile
 import re
+import sys
 
 
 
@@ -36,8 +37,8 @@ class Child:
 
     def __init__(self):
         self.memories = Diptor('Memories') # words_list[ ] diptor??
-        self.memories.add(Hishtor('#START'))
-        self.memories.add(Hishtor('#END'))
+        self.memories.add(Hishtor('#START', float(sys.argv[1])))
+        self.memories.add(Hishtor('#END', float(sys.argv[1])))
         self.asleep = False
 
     def listen(self, chapter):  # boutta double these reads lol
@@ -64,13 +65,13 @@ class Child:
         if word_1 in self.memories.dict:
             ndx1 = self.memories.dict[word_1]  # Triptor index
         else:
-            self.memories.add(Hishtor(word_1))
+            self.memories.add(Hishtor(word_1, float(sys.argv[1])))
             ndx1 = len(self.memories.list) - 1
 
         if word_2 in self.memories.dict:
             ndx2 = self.memories.dict[word_2]  # Triptor index
         else:
-            self.memories.add(Hishtor(word_2))
+            self.memories.add(Hishtor(word_2, float(sys.argv[1])))
             ndx2 = len(self.memories.list) - 1
 
         self.memories.list[ndx1].add(ndx2)
@@ -111,6 +112,8 @@ def bedtime():
 
     print()
     print('TEXT PROCESSING COMPLETE')
+    #for mem in daughter.memories.list:
+    #    print(mem.list)
     loop = True
     while loop:
         count = input('enter a number of lines, or anything else to quit: ')

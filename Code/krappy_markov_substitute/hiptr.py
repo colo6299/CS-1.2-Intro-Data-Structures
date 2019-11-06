@@ -70,8 +70,9 @@ class Hishtor:
     Can we just agree this thing runs on witchcraft? 
     '''
 
-    def __init__(self, name = 'None'):
+    def __init__(self, name = 'None', k_value = 1):
         self.name = name
+        self.k_value = k_value
         self.addchance = 1
         self.domain = 0
         self.fresh = False
@@ -129,9 +130,9 @@ class Hishtor:
         don't expect it to model things well lmao
         '''
         if not self.fresh:
-            self.domain = math.log(len(self.list)) / 0.05
+            self.domain = math.log(len(self.list) + 1) * self.k_value
         
-        index = int(math.exp(self.domain * random.random() * 0.05))
+        index = int(math.exp(self.domain * random.random() / self.k_value))
         return self.list[index - 1]  # ...yeah I tacked on a (-1) and it started working
 
 
