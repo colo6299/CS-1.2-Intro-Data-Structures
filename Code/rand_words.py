@@ -1,5 +1,6 @@
 import random
 import sys
+import cProfile
 
 def sample_words():
     f = open('/usr/share/dict/words')
@@ -11,4 +12,5 @@ def sample_words():
         print(words_list[int(random.random() * length)])
 
 if __name__ == "__main__":
-    sample_words()
+    cProfile.run('sample_words()')
+    
