@@ -137,6 +137,115 @@ class Hishtor:
 
 
 
+class NormalHistogram:
+    '''
+    Nothing strange here whatsoever.
+    '''
+
+    def __init__(self, name = 'None'):
+        self.name = name  # just in case you want to give your pet histogram a name :)
+        self.list_of_items = []
+        self.count_of_items = []
+        self.normal_chance = []
+        self.sequential_percents = []
+        self.dict = {}
+
+    def add(self, item):
+        '''
+        Adds item to triptor
+
+        Item must be hashable! 
+        '''
+        if item in self.dict:
+            ndx = self.dict[item]       
+            self.count_of_items[ndx] += 1
+        else:
+            self.list_of_items.append(item)
+            self.count_of_items.append(1)
+            self.dict[item] = len(self.list_of_items) - 1
+
+    def build_percents(self):
+        '''
+        Builds both normal percentages, and sequential selection percentages.
+        '''
+        length = len(self.list_of_items)
+        total_items = sum(self.count_of_items)
+
+        self.normal_chance = [0.0] * length
+        self.sequential_percents = [0.0] * length
+
+        # First, go through and calculate aaaalll the item ratios
+        for item_index in range(length):
+            item_chance = self.count_of_items[item_index] / total_items
+            self.normal_chance[item_index] = item_chance
+
+        # Next, rig 'em up to go one-by-one :)
+        previous_product = 1
+        for item_index in range(length):
+            sequential_chance = self.normal_chance[item_index] / previous_product
+            self.sequential_percents[item_index] = sequential_chance
+            if sequential_chance >= 1:
+                continue
+            previous_product = previous_product * (1 - sequential_chance)
+
+
+        self.sequential_percents[length - 1] = 1  # that'll fix those floating point errors!
+        
+    def choice(self, rebuild_percents = True):
+        '''
+        Picks a nice happy item from the histogram.   
+
+        Pass it a False to prevent rebuilding of the chances. Nice if you
+        don't want to do that a gajillion times.
+        '''
+
+        if rebuild_percents:
+            self.build_percents
+
+        for item_index in range(len(self.list_of_items)):
+            item_chance = self.sequential_percents[item_index]
+            if item_chance > random.random():
+                return self.list_of_items[item_index]
+   
+    def remove(self, item):
+        '''
+        Lookup is fast, probably
+
+        Returns true if object 'item' was found and removed from the Triptor, 
+        returns false if object 'item' was not removed. (not in list, or 0 in hist)
+
+        Note: I have no idea if this works.
+        '''
+        if item in self.dict:
+            ndx = self.dict[item]
+            if self.count_of_items[ndx] < 1:
+                self.count_of_items[ndx] = 0
+                return False
+            else:
+                self.hist[ndx] -= 1
+                return True
+        else:
+            return False
+
+
+def test_normal():
+    histogram = NormalHistogram('Stanley')
+    histogram.add('one')
+    histogram.add('fish')
+    histogram.add('two')
+    histogram.add('fish')
+    histogram.add('red')
+    histogram.add('fish')
+    histogram.add('blue')
+    histogram.add('fish')
+    histogram.build_percents()
+
+    print(histogram.list_of_items)
+    print(histogram.count_of_items)
+    print(histogram.normal_chance)
+    print(histogram.sequential_percents)
+
+
 def test_triptor():
     triptor = Triptor('The')
     triptor.add(1)
@@ -145,3 +254,7 @@ def test_triptor():
     triptor.add(1)
 
     assert triptor.hist[0] == 2
+
+
+if __name__ == "__main__":
+    test_normal()
