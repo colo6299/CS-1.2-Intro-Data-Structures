@@ -1,7 +1,7 @@
 import string
 
 
-def clean(filename = 'aesop.txt'):
+def clean(filename = 'pante.txt'):
     text = aesop()
     for i in range(len(text)):
         text[i] = text[i].strip().split(' ')
