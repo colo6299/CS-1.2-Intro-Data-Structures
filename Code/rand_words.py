@@ -5,6 +5,7 @@ import cProfile
 def sample_words():
     f = open('/usr/share/dict/words')
     words_list = f.readlines()
+    f.close()
     length = len(words_list)
 
     print()
