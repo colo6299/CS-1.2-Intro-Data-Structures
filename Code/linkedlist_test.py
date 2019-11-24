@@ -1,6 +1,7 @@
 #!python
 
-from linkedlist import LinkedList, Node
+from lonkedlist import LonkedList as LinkedList
+from lonkedlist import Node
 import unittest
 
 
@@ -136,6 +137,21 @@ class LinkedListTest(unittest.TestCase):
         ll.prepend('A')
         assert ll.head.data == 'A'  # New head
         assert ll.tail.data == 'C'  # Unchanged
+
+    def test_prepend_append(self):
+        l = LinkedList()
+        
+        l.prepend('Z')
+        assert l.head.data == 'Z'
+        assert l.tail.data == 'Z'  
+
+        l.append('B')
+        assert l.head.data == 'Z'  
+        assert l.tail.data == 'B'  
+
+        l.prepend('A')
+        assert l.head.data == 'A' 
+        assert l.tail.data == 'B' 
 
     def test_find(self):
         ll = LinkedList(['A', 'B', 'C'])
