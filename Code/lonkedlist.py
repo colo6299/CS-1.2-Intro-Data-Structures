@@ -21,14 +21,16 @@ class LonkedList(object):
         '''
         return bool(self.head)
 
-    def items(self):
+    def items(self, process=lambda data: data):
         '''
         Always O(n), c'mon, what'd you expect? 
+
+        pass a lambda process for fun & profit
         '''
         retlist = []
         node = self.head
         while node is not None:
-            retlist.append(node.data)
+            retlist.append(process(node.data))
             node = node.next
         return retlist
     
@@ -63,7 +65,7 @@ class LonkedList(object):
         '''
         return self.count
 
-    def fix_length(self):
+    def absolute_length(self):
         '''
         Always O(n), linear counter. Definitely correct. 
         '''
@@ -96,7 +98,7 @@ class LonkedList(object):
             node = node.next
         #raise ValueError
 
-    def delete(self, item):
+    def delete(self, item=None, quality=None):
         '''
         O(n) average/worst case, O(1) best case if the item is contained
         in the first node.
@@ -104,7 +106,20 @@ class LonkedList(object):
         p_node = None
         node = self.head
         while node != None:
-            if node.data == item:
+            if quality is not None:
+                if quality(node.data):
+                    if node == self.tail:
+                        self.tail = p_node
+                    if node != self.head:
+                        p_node.next = node.next
+                        self.count -= 1
+                        return #d4ful
+                    else:
+                        self.head = node.next
+                        self.count -= 1
+                        return #d4ful
+
+            elif node.data == item:
                 if node == self.tail:
                     self.tail = p_node
                 if node != self.head:
