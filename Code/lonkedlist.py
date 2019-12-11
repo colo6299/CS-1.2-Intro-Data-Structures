@@ -134,4 +134,156 @@ class LonkedList(object):
             node = node.next
         raise ValueError
 
+class QuestionableList(object):
+    '''
+    I'm not sure this was neccesary, but hey, I'm the only one who's done it so far
+    '''
+    def __init__(self, init_list = []):
+        self.count = 0
+        self.head = None
+        self.tail = None
 
+        for i in init_list:
+            self.append(i)
+
+    def append(self, item):
+        new_node = Node()
+        step_node = Node(item)
+
+        new_node.data = step_node
+        self.count += 1
+        if self.tail is not None:
+            step_node.next = self.tail
+            self.tail.next = new_node
+            self.tail = new_node
+        else:
+            self.head = new_node
+            self.tail = new_node
+
+    def prepend(self, item):
+        '''
+        Always O(1), it's just plopped in front
+        '''
+        new_node = Node(next=self.head)
+        step_node = Node(item)
+        new_node.data = step_node
+        self.head = new_node 
+        self.count += 1
+        if self.tail is not None:
+            pass
+        else:
+            self.tail = new_node
+
+    def items(self, process=lambda data: data):
+        '''
+        Always O(n), c'mon, what'd you expect? 
+
+        pass a lambda process for fun & profit
+        '''
+        retlist = []
+        node = self.head
+        while node is not None:
+            retlist.append(process(node.data.data))
+            node = node.next
+        return retlist
+
+    def backwards_items(self, process=lambda data: data):
+        '''
+        Always O(n), c'mon, what'd you expect? 
+
+        pass a lambda process for fun & profit
+        '''
+        retlist = []
+        node = self.tail
+        while node is not None:
+            retlist.append(process(node.data.data))
+            node = node.data.next
+        return retlist
+
+    def delete(self, item=None, quality=None):
+        '''
+        O(n) average/worst case, O(1) best case if the item is contained
+        in the first node.
+        '''
+        p_node = None
+        node = self.head
+        while node != None:
+            if quality is not None:
+                if quality(node.data.data):
+                    if node == self.tail:
+                        self.tail = p_node
+                    if node != self.head:
+                        p_node.next = node.next
+                        self.count -= 1
+                        return #d4ful
+                    else:
+                        self.head = node.next
+                        self.count -= 1
+                        return #d4ful
+
+            elif node.data.data == item:
+                if node == self.tail:
+                    self.tail = p_node
+                if node != self.head:
+                    p_node.next = node.next
+                    self.count -= 1
+                    return #d4ful
+                else:
+                    self.head = node.next
+                    self.count -= 1
+                    return #d4ful
+            p_node = node
+            node = node.next
+        raise ValueError
+
+    def backwards_delete(self, item=None, quality=None):
+        '''
+        O(n) average/worst case, O(1) best case if the item is contained
+        in the first node.
+        '''
+
+        #fix next.previous
+        p_node = None
+        node = self.tail
+        while node != None:
+            if quality is not None:
+                if quality(node.data.data):
+                    if node == self.tail:
+                        self.tail = p_node
+                    if node != self.head:
+                        p_node.data.next = node.data.next
+                        self.count -= 1
+                        return #d4ful
+                    else:
+                        self.head = node.data.next
+                        self.count -= 1
+                        return #d4ful
+
+            elif node.data.data == item:
+                if node == self.tail:
+                    self.tail = p_node
+                if node != self.head:
+                    p_node.data.next = node.data.next
+                    self.count -= 1
+                    return #d4ful
+                else:
+                    self.head = node.data.next
+                    self.count -= 1
+                    return #d4ful
+            p_node = node
+            node = node.data.next
+        raise ValueError
+
+
+    def find(self, quality):
+        '''
+        '''
+        node = self.head
+        while node != None:
+            if quality(node.data.data):
+                return node.data.data
+            node = node.next
+        #return False
+
+    def length(self):
+        return self.length

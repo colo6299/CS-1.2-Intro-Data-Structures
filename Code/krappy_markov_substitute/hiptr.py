@@ -62,6 +62,9 @@ class Triptor:
         else:
             return False
 
+    def choice(self, blah=0, blaw=1):
+        return random.choices(self.list, self.hist)
+
 
 class Hishtor:
     '''
@@ -185,10 +188,11 @@ class NormalHistogram:
             sequential_chance = self.normal_chance[item_index] / previous_product
             self.sequential_percents[item_index] = sequential_chance
             if sequential_chance >= 1:
-                continue
+                #print('...nani?')
+                break
             previous_product = previous_product * (1 - sequential_chance)
 
-
+        #print(self.list_of_items)
         self.sequential_percents[length - 1] = 1  # that'll fix those floating point errors!
         
     def choice(self, rebuild_percents = True):
@@ -198,9 +202,12 @@ class NormalHistogram:
         Pass it a False to prevent rebuilding of the chances. Nice if you
         don't want to do that a gajillion times.
         '''
-
+        
         if rebuild_percents:
-            self.build_percents
+            self.build_percents()
+
+        #print(len(self.sequential_percents))
+        #print(len(self.list_of_items))
 
         for item_index in range(len(self.list_of_items)):
             item_chance = self.sequential_percents[item_index]

@@ -9,7 +9,7 @@ def clean(filename = 'pante.txt'):
     
 
 def aesop():
-    f = open('pante.txt', 'r')
+    f = open('potter.txt', 'r')
     words_list = f.readlines()
     f.close()
     # print(words_list)

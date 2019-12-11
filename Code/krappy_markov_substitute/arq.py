@@ -71,6 +71,12 @@ class FixedQ(object):
             else:
                 self.array = starter_list
 
+    def __str__(self):
+        '''
+        stotrorrjw
+        '''
+        return ' '.join(self.items())
+
     def ndqueue(self, item):
         '''
         enqueue and dequeue at the same time!
@@ -85,8 +91,10 @@ class FixedQ(object):
         retlist = []
         index = self.head
         while index != self.head + self.width:
-            retlist.append(self.array[index])
+            retlist.append(self.array[index%self.width])
             index += 1
+        return retlist
+
 
 
 def test_q():
